@@ -17,5 +17,16 @@ namespace MIW_P1
             InitializeComponent();
         }
 
+        private void button1_Click(object sender, EventArgs e)
+        {
+            openFileDialog1.ShowDialog();
+            textBox1.Text = openFileDialog1.FileName;
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            openFileDialog2.ShowDialog();
+            textBox2.Text = openFileDialog2.FileName;
+        }
     }
 }
