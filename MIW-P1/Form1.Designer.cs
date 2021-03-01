@@ -118,7 +118,7 @@ namespace MIW_P1
             // textBox3
             // 
             this.textBox3.Location = new System.Drawing.Point(114, 72);
-            this.textBox3.MaxLength = 1;
+            this.textBox3.MaxLength = 5;
             this.textBox3.Name = "textBox3";
             this.textBox3.Size = new System.Drawing.Size(39, 23);
             this.textBox3.TabIndex = 7;

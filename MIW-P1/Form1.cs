@@ -61,12 +61,12 @@ namespace MIW_P1
                             if (n==0)
                             {
                                 textBox4.Text += $"Column nr {i} is an int.{Environment.NewLine}";
-                                dataset.attributes.Add(new List<object>(lines.Length) { columns[i] });
+                                dataset.attributes.Add(new List<object>(lines.Length) { x });
                                 dataset.attributeTypes.Add("int");
                             }
                             else
                             {
-                                dataset.attributes[i].Add(columns[i]);
+                                dataset.attributes[i].Add(x);
                             }
                         }
                         else if(float.TryParse(columns[i], out f))
@@ -75,12 +75,12 @@ namespace MIW_P1
                             if (n == 0)
                             {
                                 textBox4.Text += $"Column nr {i} is a float.{Environment.NewLine}";
-                                dataset.attributes.Add(new List<object>(lines.Length) { columns[i] });
+                                dataset.attributes.Add(new List<object>(lines.Length) { f });
                                 dataset.attributeTypes.Add("float");
                             }
                             else
                             {
-                                dataset.attributes[i].Add(columns[i]);
+                                dataset.attributes[i].Add(f);
                             }
                         }
                         else if (Char.IsSymbol(columns[i], 0))
