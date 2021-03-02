@@ -167,7 +167,14 @@ namespace MIW_P1
                         List<float> tmpList = new List<float>();
                         foreach (var f in dataset.attributes[i])
                         {
-                            tmpList.Add(Convert.ToSingle(f));
+                            if (Convert.ToString(f) == "?")
+                            {
+                                tmpList.Add(tmpList[0]);
+                            }
+                            else
+                            {
+                                tmpList.Add(Convert.ToSingle(f));
+                            }
                         }
                         double maximum = (double)tmpList.Max();
                         double minimum = (double)tmpList.Min();
@@ -181,11 +188,40 @@ namespace MIW_P1
                     }
                     else
                     {
-                        
+                        List<string> uniqueStrings = RemoveQuestionMark(dataset.attributes[i]);
+                        int length = uniqueStrings.Count;
+                        List<object> normalizedColumn = new List<object>();
+                        foreach (var x in dataset.attributes[i])
+                        {
+                            double tmp;
+                            if (Convert.ToString(x) == "?")
+                            {
+                                tmp = 0;
+                            }
+                            else
+                            {
+                                tmp = uniqueStrings.IndexOf(Convert.ToString(x)) / ((double) length-1);
+                            }
+                            normalizedColumn.Add(tmp);
+                        }
+                        normalizedAttributes.Add(normalizedColumn);
                     }
                 }
                 textBox4.Text += $"Dataset normalized.{Environment.NewLine}";
             }
+        }
+
+        public List<string> RemoveQuestionMark(List<object> list)
+        {
+            List<string> result = new List<string>();
+            for (int i = 0; i < list.Count; i++)
+            {
+                if (Convert.ToString(list[i]) != "?" && !result.Contains(list[i]))
+                {
+                    result.Add(Convert.ToString(list[i]));
+                }
+            }
+            return result;
         }
     }
 }
