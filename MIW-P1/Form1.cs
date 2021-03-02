@@ -13,7 +13,8 @@ namespace MIW_P1
 {
     public partial class Form1 : Form
     {
-        private Dataset dataset = null;
+        private Dataset dataset = new Dataset();
+        private bool isDatasetLoaded = false;
         public Form1()
         {
             InitializeComponent();
@@ -45,16 +46,15 @@ namespace MIW_P1
             }
             else
             {
-                dataset = new Dataset();
+                
                 string[] lines = File.ReadAllLines(textBox1.Text);
                 for (int n = 0; n < lines.Length; n++)
                 {
                     string[] columns = lines[n].Split(textBox3.Text);
-                    //check type
+                    //check type and load
                     for (int i = 0; i < columns.Length; i++)
                     {
                         float f;
-                        string s;
                         int x;
                         if(Int32.TryParse(columns[i], out x))
                         {
@@ -112,6 +112,8 @@ namespace MIW_P1
                         }
                     }
                 }
+
+                isDatasetLoaded = true;
                 textBox4.Text += $"Dataset loaded.{Environment.NewLine}";
                 button5.Enabled = false;
                 button5.Text = "Dataset loaded";
@@ -121,7 +123,7 @@ namespace MIW_P1
         //GENERATE CONFIG FILE BUTTON
         private void button3_Click(object sender, EventArgs e)
         {
-            if (dataset == null)
+            if (!isDatasetLoaded)
             {
                 MessageBox.Show("There is no dataset loaded!");
             }
@@ -134,13 +136,55 @@ namespace MIW_P1
         //CHECK DATASET BUTTON
         private void button4_Click(object sender, EventArgs e)
         {
-            if (dataset == null)
+            if (!isDatasetLoaded)
             {
                 MessageBox.Show("There is no dataset loaded!");
             }
             else if (dataset.attributes.Count == 0)
             {
                 MessageBox.Show("Dataset is empty!");
+            }
+        }
+
+        //NORMALIZE DATA BUTTON
+        private void button6_Click(object sender, EventArgs e)
+        {
+            if (!isDatasetLoaded)
+            {
+                MessageBox.Show("There is no dataset loaded!");
+            }
+            else if (dataset.attributes.Count == 0)
+            {
+                MessageBox.Show("Dataset is empty!");
+            }
+            else
+            {
+                List<List<object>> normalizedAttributes = new List<List<object>>(dataset.attributes.Count);
+                for (int i = 0; i < dataset.attributes.Count; i++)
+                {
+                    if (dataset.attributeTypes[i] == "float" || dataset.attributeTypes[i] == "int")
+                    {
+                        List<float> tmpList = new List<float>();
+                        foreach (var f in dataset.attributes[i])
+                        {
+                            tmpList.Add(Convert.ToSingle(f));
+                        }
+                        double maximum = (double)tmpList.Max();
+                        double minimum = (double)tmpList.Min();
+                        List<object> normalizedColumn = new List<object>(dataset.attributes[i].Count);
+                        for (int j = 0; j < dataset.attributes[i].Count; j++)
+                        {
+                            double normalizedValue = ((double)tmpList[j] -minimum)/(maximum-minimum);
+                            normalizedColumn.Add(normalizedValue);
+                        }
+                        normalizedAttributes.Add(normalizedColumn);
+                    }
+                    else
+                    {
+                        
+                    }
+                }
+                textBox4.Text += $"Dataset normalized.{Environment.NewLine}";
             }
         }
     }
