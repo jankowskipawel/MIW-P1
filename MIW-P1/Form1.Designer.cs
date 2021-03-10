@@ -88,9 +88,9 @@ namespace MIW_P1
             this.label1.AutoSize = true;
             this.label1.Location = new System.Drawing.Point(12, 13);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(92, 15);
+            this.label1.Size = new System.Drawing.Size(76, 15);
             this.label1.TabIndex = 3;
-            this.label1.Text = "Dataset location";
+            this.label1.Text = "Dataset path:";
             // 
             // textBox2
             // 
@@ -104,18 +104,18 @@ namespace MIW_P1
             this.label2.AutoSize = true;
             this.label2.Location = new System.Drawing.Point(12, 132);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(108, 15);
+            this.label2.Size = new System.Drawing.Size(92, 15);
             this.label2.TabIndex = 5;
-            this.label2.Text = "Config file location";
+            this.label2.Text = "Config file path:";
             // 
             // label3
             // 
             this.label3.AutoSize = true;
             this.label3.Location = new System.Drawing.Point(12, 75);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(96, 15);
+            this.label3.Size = new System.Drawing.Size(84, 15);
             this.label3.TabIndex = 6;
-            this.label3.Text = "Dataset delimiter";
+            this.label3.Text = "Data delimiter:";
             // 
             // textBox3
             // 
