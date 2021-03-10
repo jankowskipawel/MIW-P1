@@ -188,7 +188,7 @@ namespace MIW_P1
                     }
                     else
                     {
-                        List<string> uniqueStrings = RemoveQuestionMark(dataset.attributes[i]);
+                        List<string> uniqueStrings = CreateUniqueList(dataset.attributes[i]);
                         int length = uniqueStrings.Count;
                         List<object> normalizedColumn = new List<object>();
                         foreach (var x in dataset.attributes[i])
@@ -211,7 +211,7 @@ namespace MIW_P1
             }
         }
 
-        public List<string> RemoveQuestionMark(List<object> list)
+        public List<string> CreateUniqueList(List<object> list)
         {
             List<string> result = new List<string>();
             for (int i = 0; i < list.Count; i++)
@@ -222,6 +222,13 @@ namespace MIW_P1
                 }
             }
             return result;
+        }
+
+        private void button7_Click(object sender, EventArgs e)
+        {
+            SaveFileForm saveFileForm = new SaveFileForm();
+            saveFileForm.dataSet = dataset;
+            saveFileForm.Show();
         }
     }
 }

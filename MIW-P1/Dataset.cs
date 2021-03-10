@@ -4,7 +4,7 @@ using System.Text;
 
 namespace MIW_P1
 {
-    class Dataset
+    public class Dataset
     {
         public List<List<object>> attributes;
         public List<string> attributeTypes;
