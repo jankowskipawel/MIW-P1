@@ -12,6 +12,7 @@ namespace MIW_P1
     public partial class SaveFileForm : Form
     {
         public Dataset dataSet = null;
+        private Random rnd = new Random();
         public SaveFileForm()
         {
             InitializeComponent();
@@ -58,5 +59,45 @@ namespace MIW_P1
             }
 
         }
+
+        public void UpdatePreview()
+        {
+            if (radioButton1.Checked)
+            {
+                for (int i = 0; i <= 10; i++)
+                {
+                    List<object> tmp = new List<object>();
+                    for (int j = 0; j <= 5; j++)
+                    {
+                        tmp.Add(rnd.Next(0, 100));
+                    }
+                    textBox3.Text += (string.Join(textBox2.Text, tmp));
+                    textBox3.Text += Environment.NewLine;
+                }
+            }
+            else
+            {
+                for (int i = 0; i <= 5; i++)
+                {
+                    List<object> tmp = new List<object>();
+                    for (int j = 0; j <= 10; j++)
+                    {
+                        tmp.Add(rnd.Next(0, 100));
+                    }
+
+                    textBox3.Text += (string.Join(textBox2.Text, tmp));
+                    textBox3.Text += Environment.NewLine;
+                }
+            }
+            
+        }
+
+
+        private void textBox2_TextChanged_1(object sender, EventArgs e)
+        {
+            textBox3.Text = "";
+            UpdatePreview();
+        }
+
     }
 }

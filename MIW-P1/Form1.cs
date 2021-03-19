@@ -228,6 +228,7 @@ namespace MIW_P1
         {
             SaveFileForm saveFileForm = new SaveFileForm();
             saveFileForm.dataSet = dataset;
+            saveFileForm.UpdatePreview();
             saveFileForm.Show();
         }
     }
