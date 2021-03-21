@@ -118,7 +118,7 @@ namespace MIW_P1
                 MessageBox.Show("Dataset is empty!");
             }
             DateTime date = DateTime.Now;
-            StreamWriter sw = new StreamWriter($"{System.IO.Path.GetDirectoryName(textBox1.Text)}\\config-generated-{date.ToString("yyyy_MM_d_H-mm-ss")}.txt");
+            StreamWriter sw = new StreamWriter($"{System.IO.Path.GetDirectoryName(textBox1.Text)}\\config-{date.ToString("yyyy_MM_d_H-mm-ss")}.txt");
             sw.WriteLine("Column(numeric) x: type, range");
             sw.WriteLine("Column(string/symbol) x: type, unique values");
             for (int i = 0; i < dataset.attributes.Count; i++)
@@ -161,6 +161,67 @@ namespace MIW_P1
             else if (dataset.attributes.Count == 0)
             {
                 MessageBox.Show("Dataset is empty!");
+            }
+            else if (textBox2.Text.Length==0)
+            {
+                MessageBox.Show("Specify config file path");
+            }
+            else
+            {
+                textBox4.Text += $"{Environment.NewLine}Checking dataset using config file{Environment.NewLine}";
+                string[] lines = File.ReadAllLines(textBox2.Text);
+                for (int n = 2; n < lines.Length; n++)
+                {
+                    int columnNumber = n - 2;
+                    if (dataset.attributeTypes[columnNumber] == "numeric")
+                    {
+                        string[] data = lines[n].Split(":").Last().Trim().Split(",");
+                        string type = data[0].Trim();
+                        float min = float.Parse(data[1].Trim().Split("-")[0]);
+                        float max = float.Parse(data[1].Trim().Split("-")[1]);
+                        for (int i = 0; i < dataset.attributes[columnNumber].Count; i++)
+                        {
+                            if (Convert.ToString(dataset.attributes[columnNumber][i]) == "?")
+                            {
+                                textBox4.Text += $"Missing data at row {i}, column {columnNumber}{Environment.NewLine}";
+                            }
+                            else
+                            {
+                                if (Convert.ToSingle(dataset.attributes[columnNumber][i]) > max ||
+                                    Convert.ToSingle(dataset.attributes[columnNumber][i]) < min)
+                                {
+                                    textBox4.Text += $"Data exceeds range at row {i}, column {columnNumber}{Environment.NewLine}";
+                                }
+                            }
+                        }
+                    }
+                    else
+                    {
+                        string[] uniqueStrings = lines[n].Split(":").Last().Trim().Split(",")[1].Split(" ");
+                        for (int i = 0; i < dataset.attributes[columnNumber].Count; i++)
+                        {
+                            if (Convert.ToString(dataset.attributes[columnNumber][i]) == "?")
+                            {
+                                textBox4.Text += $"Missing data at row {i}, column {columnNumber}{Environment.NewLine}";
+                            }
+                            else
+                            {
+                                bool isCorrect = false;
+                                foreach (var x in uniqueStrings)
+                                {
+                                    if (x == (string)dataset.attributes[columnNumber][i])
+                                    {
+                                        isCorrect = true;
+                                    }
+                                }
+                                if (!isCorrect)
+                                {
+                                    textBox4.Text+= $"Wrong data at row {i}, column {columnNumber}{Environment.NewLine}";
+                                }
+                            }
+                        }
+                    }
+                }
             }
         }
 
