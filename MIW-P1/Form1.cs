@@ -147,6 +147,8 @@ namespace MIW_P1
             }
             sw.Close();
             textBox4.Text += $"{Environment.NewLine}Config file generated at {System.IO.Path.GetDirectoryName(textBox1.Text)}\\config-{date.ToString("yyyy_MM_d_H-mm-ss")}.txt{Environment.NewLine}";
+            textBox4.SelectionStart = textBox4.Text.Length;
+            textBox4.ScrollToCaret();
         }
 
         //CHECK DATASET BUTTON
@@ -162,7 +164,7 @@ namespace MIW_P1
             }
             else
             {
-                textBox4.Text += $"{Environment.NewLine}Checking dataset using config file{Environment.NewLine}";
+                textBox4.Text += $"{Environment.NewLine}Checking dataset using config file...{Environment.NewLine}";
                 string[] lines = File.ReadAllLines(textBox2.Text);
                 for (int n = 2; n < lines.Length; n++)
                 {
@@ -217,6 +219,8 @@ namespace MIW_P1
                     }
                 }
                 textBox4.Text += $"{Environment.NewLine}End of dataset check{Environment.NewLine}";
+                textBox4.SelectionStart = textBox4.Text.Length;
+                textBox4.ScrollToCaret();
             }
         }
 
@@ -282,6 +286,8 @@ namespace MIW_P1
                 button6.Enabled = false;
                 button6.Text = "Dataset normalized";
                 textBox4.Text += $"Dataset normalized.{Environment.NewLine}";
+                textBox4.SelectionStart = textBox4.Text.Length;
+                textBox4.ScrollToCaret();
             }
         }
 
