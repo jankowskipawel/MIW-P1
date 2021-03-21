@@ -8,11 +8,13 @@ namespace MIW_P1
     {
         public List<List<object>> attributes;
         public List<string> attributeTypes;
+        public List<List<object>> normalizedAttributes;
 
         public Dataset()
         {
             attributes = new List<List<object>>();
             attributeTypes = new List<string>();
+            normalizedAttributes = new List<List<object>>();
         }
     }
 }

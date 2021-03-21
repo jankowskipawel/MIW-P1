@@ -30,15 +30,24 @@ namespace MIW_P1
             if (!string.IsNullOrEmpty(textBox1.Text))
             {
                 StreamWriter sw = new StreamWriter(textBox1.Text);
+                List<List<object>> data = new List<List<object>>();
+                if (checkBox1.Checked)
+                {
+                    data = dataSet.normalizedAttributes;
+                }
+                else
+                {
+                    data = dataSet.attributes;
+                }
                 //if vertical column output
                 if (radioButton1.Checked)
                 {
-                    for (int i = 0; i < dataSet.attributes[0].Count; i++)
+                    for (int i = 0; i < data[0].Count; i++)
                     {
                         List<object> tmp = new List<object>();
-                        for (int j = 0; j < dataSet.attributes.Count; j++)
+                        for (int j = 0; j < data.Count; j++)
                         {
-                            tmp.Add(dataSet.attributes[j][i]);
+                            tmp.Add(data[j][i]);
                         }
                         sw.WriteLine(string.Join(textBox2.Text, tmp));
                     }
@@ -46,7 +55,7 @@ namespace MIW_P1
                 //if horizontal column output
                 else
                 {
-                    foreach (var column in dataSet.attributes)
+                    foreach (var column in data)
                     {
                         sw.WriteLine(string.Join(textBox2.Text, column));
                     }
@@ -69,7 +78,15 @@ namespace MIW_P1
                     List<object> tmp = new List<object>();
                     for (int j = 0; j <= 5; j++)
                     {
-                        tmp.Add(rnd.Next(0, 100));
+                        if (!checkBox1.Checked)
+                        {
+                            tmp.Add(rnd.Next(0, 100));
+                        }
+                        else
+                        {
+                            tmp.Add(Math.Round(rnd.NextDouble(),2));
+                        }
+
                     }
                     textBox3.Text += (string.Join(textBox2.Text, tmp));
                     textBox3.Text += Environment.NewLine;
@@ -82,7 +99,14 @@ namespace MIW_P1
                     List<object> tmp = new List<object>();
                     for (int j = 0; j <= 10; j++)
                     {
-                        tmp.Add(rnd.Next(0, 100));
+                        if (!checkBox1.Checked)
+                        {
+                            tmp.Add(rnd.Next(0, 100));
+                        }
+                        else
+                        {
+                            tmp.Add(Math.Round(rnd.NextDouble(), 2));
+                        }
                     }
 
                     textBox3.Text += (string.Join(textBox2.Text, tmp));

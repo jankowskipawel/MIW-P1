@@ -55,28 +55,14 @@ namespace MIW_P1
                     for (int i = 0; i < columns.Length; i++)
                     {
                         float f;
-                        int x;
-                        if(Int32.TryParse(columns[i], out x))
-                        {
-                            if (n==0)
-                            {
-                                textBox4.Text += $"Column nr {i} is an int.{Environment.NewLine}";
-                                dataset.attributes.Add(new List<object>(lines.Length) { x });
-                                dataset.attributeTypes.Add("int");
-                            }
-                            else
-                            {
-                                dataset.attributes[i].Add(x);
-                            }
-                        }
-                        else if(float.TryParse(columns[i], out f))
+                        if(float.TryParse(columns[i], out f))
                         {
                             
                             if (n == 0)
                             {
-                                textBox4.Text += $"Column nr {i} is a float.{Environment.NewLine}";
+                                textBox4.Text += $"Column nr {i} is numeric.{Environment.NewLine}";
                                 dataset.attributes.Add(new List<object>(lines.Length) { f });
-                                dataset.attributeTypes.Add("float");
+                                dataset.attributeTypes.Add("numeric");
                             }
                             else
                             {
@@ -131,6 +117,38 @@ namespace MIW_P1
             {
                 MessageBox.Show("Dataset is empty!");
             }
+            DateTime date = DateTime.Now;
+            StreamWriter sw = new StreamWriter($"{System.IO.Path.GetDirectoryName(textBox1.Text)}\\config-generated-{date.ToString("yyyy_MM_d_H-mm-ss")}.txt");
+            sw.WriteLine("Column(numeric) x: type, range");
+            sw.WriteLine("Column(string/symbol) x: type, unique values");
+            for (int i = 0; i < dataset.attributes.Count; i++)
+            {
+                if (dataset.attributeTypes[i] == "numeric")
+                {
+                    List<float> tmp = new List<float>();
+                    foreach (var x in dataset.attributes[i])
+                    {
+                        if (Convert.ToString(x) == "?")
+                        {
+                            tmp.Add(tmp[0]);
+                        }
+                        else
+                        {
+                            tmp.Add(Convert.ToSingle(x));
+                        }
+                    }
+                    var min = tmp.Min();
+                    var max = tmp.Max();
+                    sw.WriteLine($"Column {i}: {dataset.attributeTypes[i]}, {min}-{max}");
+                }
+                else
+                {
+                    List<object> tmp = dataset.attributes[i].Distinct().ToList();
+                    tmp.RemoveAll(item => (string) item == "?");
+                    sw.WriteLine($"Column {i}: {dataset.attributeTypes[i]}, {String.Join(" ", tmp)}");
+                }
+            }
+            sw.Close();
         }
 
         //CHECK DATASET BUTTON
@@ -162,7 +180,7 @@ namespace MIW_P1
                 List<List<object>> normalizedAttributes = new List<List<object>>(dataset.attributes.Count);
                 for (int i = 0; i < dataset.attributes.Count; i++)
                 {
-                    if (dataset.attributeTypes[i] == "float" || dataset.attributeTypes[i] == "int")
+                    if (dataset.attributeTypes[i] == "numeric")
                     {
                         List<float> tmpList = new List<float>();
                         foreach (var f in dataset.attributes[i])
@@ -207,6 +225,10 @@ namespace MIW_P1
                         normalizedAttributes.Add(normalizedColumn);
                     }
                 }
+
+                dataset.normalizedAttributes = normalizedAttributes;
+                button6.Enabled = false;
+                button6.Text = "Dataset normalized";
                 textBox4.Text += $"Dataset normalized.{Environment.NewLine}";
             }
         }
@@ -226,10 +248,17 @@ namespace MIW_P1
 
         private void button7_Click(object sender, EventArgs e)
         {
-            SaveFileForm saveFileForm = new SaveFileForm();
-            saveFileForm.dataSet = dataset;
-            saveFileForm.UpdatePreview();
-            saveFileForm.Show();
+            if (dataset.normalizedAttributes.Count == 0)
+            {
+                MessageBox.Show("Normalize data before saving!");
+            }
+            else
+            {
+                SaveFileForm saveFileForm = new SaveFileForm();
+                saveFileForm.dataSet = dataset;
+                saveFileForm.UpdatePreview();
+                saveFileForm.Show();
+            }
         }
     }
 }
