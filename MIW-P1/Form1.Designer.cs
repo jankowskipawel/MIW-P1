@@ -127,6 +127,7 @@ namespace MIW_P1
             // 
             // button3
             // 
+            this.button3.Enabled = false;
             this.button3.Location = new System.Drawing.Point(411, 75);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(141, 23);
@@ -137,6 +138,7 @@ namespace MIW_P1
             // 
             // button4
             // 
+            this.button4.Enabled = false;
             this.button4.Location = new System.Drawing.Point(213, 199);
             this.button4.Name = "button4";
             this.button4.Size = new System.Drawing.Size(183, 23);
@@ -168,6 +170,7 @@ namespace MIW_P1
             // 
             // button6
             // 
+            this.button6.Enabled = false;
             this.button6.Location = new System.Drawing.Point(223, 114);
             this.button6.Name = "button6";
             this.button6.Size = new System.Drawing.Size(141, 23);
@@ -178,6 +181,7 @@ namespace MIW_P1
             // 
             // button7
             // 
+            this.button7.Enabled = false;
             this.button7.Location = new System.Drawing.Point(411, 113);
             this.button7.Name = "button7";
             this.button7.Size = new System.Drawing.Size(141, 23);
@@ -205,6 +209,8 @@ namespace MIW_P1
             this.Controls.Add(this.textBox1);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.button1);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.MaximizeBox = false;
             this.Name = "Form1";
             this.Text = "MIW-P1";
             this.ResumeLayout(false);

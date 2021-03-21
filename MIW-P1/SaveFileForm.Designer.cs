@@ -180,6 +180,8 @@ namespace MIW_P1
             this.Controls.Add(this.label1);
             this.Controls.Add(this.textBox1);
             this.Controls.Add(this.button1);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.MaximizeBox = false;
             this.Name = "SaveFileForm";
             this.Text = "Save FIle As..";
             this.groupBox1.ResumeLayout(false);

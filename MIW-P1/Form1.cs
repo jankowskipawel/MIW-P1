@@ -14,7 +14,6 @@ namespace MIW_P1
     public partial class Form1 : Form
     {
         private Dataset dataset = new Dataset();
-        private bool isDatasetLoaded = false;
         public Form1()
         {
             InitializeComponent();
@@ -98,22 +97,20 @@ namespace MIW_P1
                         }
                     }
                 }
-
-                isDatasetLoaded = true;
                 textBox4.Text += $"Dataset loaded.{Environment.NewLine}";
                 button5.Enabled = false;
                 button5.Text = "Dataset loaded";
+                button3.Enabled = true;
+                button7.Enabled = true;
+                button6.Enabled = true;
+                button4.Enabled = true;
             }
         }
 
         //GENERATE CONFIG FILE BUTTON
         private void button3_Click(object sender, EventArgs e)
         {
-            if (!isDatasetLoaded)
-            {
-                MessageBox.Show("There is no dataset loaded!");
-            }
-            else if (dataset.attributes.Count == 0)
+            if (dataset.attributes.Count == 0)
             {
                 MessageBox.Show("Dataset is empty!");
             }
@@ -149,16 +146,13 @@ namespace MIW_P1
                 }
             }
             sw.Close();
+            textBox4.Text += $"{Environment.NewLine}Config file generated at {System.IO.Path.GetDirectoryName(textBox1.Text)}\\config-{date.ToString("yyyy_MM_d_H-mm-ss")}.txt{Environment.NewLine}";
         }
 
         //CHECK DATASET BUTTON
         private void button4_Click(object sender, EventArgs e)
         {
-            if (!isDatasetLoaded)
-            {
-                MessageBox.Show("There is no dataset loaded!");
-            }
-            else if (dataset.attributes.Count == 0)
+            if (dataset.attributes.Count == 0)
             {
                 MessageBox.Show("Dataset is empty!");
             }
@@ -222,17 +216,14 @@ namespace MIW_P1
                         }
                     }
                 }
+                textBox4.Text += $"{Environment.NewLine}End of dataset check{Environment.NewLine}";
             }
         }
 
         //NORMALIZE DATA BUTTON
         private void button6_Click(object sender, EventArgs e)
         {
-            if (!isDatasetLoaded)
-            {
-                MessageBox.Show("There is no dataset loaded!");
-            }
-            else if (dataset.attributes.Count == 0)
+            if (dataset.attributes.Count == 0)
             {
                 MessageBox.Show("Dataset is empty!");
             }
