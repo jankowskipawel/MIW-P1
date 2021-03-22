@@ -318,5 +318,24 @@ namespace MIW_P1
                 saveFileForm.Show();
             }
         }
+
+        // PART II
+        private void button10_Click(object sender, EventArgs e)
+        {
+            openFileDialog3.ShowDialog();
+            textBox8.Text = openFileDialog3.FileName;
+        }
+
+        //SAVE DATA
+        private void button8_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        //LOAD DATA
+        private void button9_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
