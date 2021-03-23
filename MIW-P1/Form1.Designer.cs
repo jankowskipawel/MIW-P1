@@ -173,7 +173,7 @@ namespace MIW_P1
             this.textBox4.Name = "textBox4";
             this.textBox4.ReadOnly = true;
             this.textBox4.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.textBox4.Size = new System.Drawing.Size(570, 308);
+            this.textBox4.Size = new System.Drawing.Size(570, 298);
             this.textBox4.TabIndex = 10;
             // 
             // button5
@@ -280,6 +280,7 @@ namespace MIW_P1
             this.textBox9.Location = new System.Drawing.Point(33, 191);
             this.textBox9.Multiline = true;
             this.textBox9.Name = "textBox9";
+            this.textBox9.ReadOnly = true;
             this.textBox9.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.textBox9.Size = new System.Drawing.Size(529, 334);
             this.textBox9.TabIndex = 10;

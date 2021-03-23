@@ -364,6 +364,9 @@ namespace MIW_P1
                 }
                 ds.data = randomData;
                 sw.Close();
+                textBox9.Text += $"File saved to {Path.GetFullPath(textBox8.Text)}{Environment.NewLine}";
+                textBox9.SelectionStart = textBox9.Text.Length;
+                textBox9.ScrollToCaret();
             }
         }
 
@@ -387,9 +390,13 @@ namespace MIW_P1
                     {
                         tmp.Add(Convert.ToSingle(str));
                     }
+                    textBox9.Text += $"Data between {i-1} and {i} loaded. Count = {tmp.Count}{Environment.NewLine}";
                     loadedData.Add(tmp);
                 }
                 ds.data = loadedData;
+                textBox9.Text += $"Data loaded from {Path.GetFullPath(textBox8.Text)}{Environment.NewLine}";
+                textBox9.SelectionStart = textBox9.Text.Length;
+                textBox9.ScrollToCaret();
             }
         }
     }
