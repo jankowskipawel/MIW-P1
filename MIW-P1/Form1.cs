@@ -319,23 +319,58 @@ namespace MIW_P1
             }
         }
 
-        // PART II
+        // ############################################ PART II ############################################
         private void button10_Click(object sender, EventArgs e)
         {
             openFileDialog3.ShowDialog();
             textBox8.Text = openFileDialog3.FileName;
         }
 
+        private DataStructure ds = new DataStructure();
+
         //SAVE DATA
         private void button8_Click(object sender, EventArgs e)
         {
+            if (textBox8.Text.Length == 0)
+            {
+                MessageBox.Show("Specify file path first");
+            }
+            else
+            {
+                StreamWriter sw = new StreamWriter(textBox8.Text);
+                ds.structure = textBox5.Text;
+                List<List<float>> randomData = new List<List<float>>();
+                List<int> dataCountList = new List<int>();
+                sw.WriteLine(ds.structure);
+                string[] structureList = textBox5.Text.Split(" ");
+                for (int i = 0; i < structureList.Length-1; i++)
+                {
+                    dataCountList.Add(Int32.Parse(structureList[i])* Int32.Parse(structureList[i+1])+ Int32.Parse(structureList[i+1]));
+                }
 
+                float min = Convert.ToSingle(textBox6.Text);
+                float max = Convert.ToSingle(textBox7.Text);
+                Random rnd = new Random(DateTime.Now.Millisecond);
+
+                foreach (var x in dataCountList)
+                {
+                    List<float> tmpList = new List<float>();
+                    foreach (var i in Enumerable.Range(0, x))
+                    {
+                        tmpList.Add((float)rnd.NextDouble() * max + min);
+                    }
+                    randomData.Add(tmpList);
+                    sw.WriteLine(string.Join(" ", tmpList));
+                }
+                ds.data = randomData;
+                sw.Close();
+            }
         }
 
         //LOAD DATA
         private void button9_Click(object sender, EventArgs e)
         {
-
+            
         }
     }
 }

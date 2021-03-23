@@ -12,7 +12,7 @@ namespace MIW_P1
     public partial class SaveFileForm : Form
     {
         public Dataset dataSet = null;
-        private Random rnd = new Random();
+        private Random rnd = new Random(DateTime.Now.Millisecond);
         public SaveFileForm()
         {
             InitializeComponent();
