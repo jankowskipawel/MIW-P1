@@ -370,7 +370,27 @@ namespace MIW_P1
         //LOAD DATA
         private void button9_Click(object sender, EventArgs e)
         {
-            
+            if (textBox8.Text.Length == 0)
+            {
+                MessageBox.Show("Specify file path first");
+            }
+            else
+            {
+                string[] lines = File.ReadAllLines(textBox8.Text);
+                ds.structure = lines[0];
+                List<List<float>> loadedData = new List<List<float>>();
+                for (int i = 1; i < lines.Length; i++)
+                {
+                    List<float> tmp = new List<float>();
+                    string[] dataArrayString = lines[i].Split(" ");
+                    foreach (var str in dataArrayString)
+                    {
+                        tmp.Add(Convert.ToSingle(str));
+                    }
+                    loadedData.Add(tmp);
+                }
+                ds.data = loadedData;
+            }
         }
     }
 }
