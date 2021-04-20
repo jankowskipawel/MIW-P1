@@ -381,6 +381,7 @@ namespace MIW_P1
             {
                 string[] lines = File.ReadAllLines(textBox8.Text);
                 ds.structure = lines[0];
+                textBox9.Text += $"Data structure: {ds.structure}{Environment.NewLine}";
                 List<List<float>> loadedData = new List<List<float>>();
                 for (int i = 1; i < lines.Length; i++)
                 {
