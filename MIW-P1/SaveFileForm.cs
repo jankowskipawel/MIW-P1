@@ -5,6 +5,7 @@ using System.Data;
 using System.Drawing;
 using System.IO;
 using System.Text;
+using System.Text.Json;
 using System.Windows.Forms;
 
 namespace MIW_P1
@@ -53,12 +54,17 @@ namespace MIW_P1
                     }
                 }
                 //if horizontal column output
-                else
+                else if(radioButton2.Checked)
                 {
                     foreach (var column in data)
                     {
                         sw.WriteLine(string.Join(textBox2.Text, column));
                     }
+                }
+                else
+                {
+                    string jsonFile = JsonSerializer.Serialize(data);
+                    sw.Write(jsonFile);
                 }
                 sw.Close();
             }
@@ -92,7 +98,7 @@ namespace MIW_P1
                     textBox3.Text += Environment.NewLine;
                 }
             }
-            else
+            else if(radioButton2.Checked)
             {
                 for (int i = 0; i <= 5; i++)
                 {
@@ -112,6 +118,10 @@ namespace MIW_P1
                     textBox3.Text += (string.Join(textBox2.Text, tmp));
                     textBox3.Text += Environment.NewLine;
                 }
+            }
+            else
+            {
+                textBox3.Text = "JSON";
             }
             
         }

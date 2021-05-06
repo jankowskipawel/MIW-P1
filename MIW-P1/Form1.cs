@@ -45,7 +45,7 @@ namespace MIW_P1
             }
             else
             {
-                
+                //read all lines from file
                 string[] lines = File.ReadAllLines(textBox1.Text);
                 for (int n = 0; n < lines.Length; n++)
                 {
@@ -116,7 +116,7 @@ namespace MIW_P1
             }
             DateTime date = DateTime.Now;
             StreamWriter sw = new StreamWriter($"{System.IO.Path.GetDirectoryName(textBox1.Text)}\\config-{date.ToString("yyyy_MM_d_H-mm-ss")}.txt");
-            sw.WriteLine("Column(numeric) x: type, range");
+            sw.WriteLine("Column(numeric) x: type, min max");
             sw.WriteLine("Column(string/symbol) x: type, unique values");
             for (int i = 0; i < dataset.attributes.Count; i++)
             {
@@ -136,7 +136,7 @@ namespace MIW_P1
                     }
                     var min = tmp.Min();
                     var max = tmp.Max();
-                    sw.WriteLine($"Column {i}: {dataset.attributeTypes[i]}, {min}-{max}");
+                    sw.WriteLine($"Column {i}: {dataset.attributeTypes[i]}, {min}~{max}");
                 }
                 else
                 {
@@ -173,8 +173,8 @@ namespace MIW_P1
                     {
                         string[] data = lines[n].Split(":").Last().Trim().Split(",");
                         string type = data[0].Trim();
-                        float min = float.Parse(data[1].Trim().Split("-")[0]);
-                        float max = float.Parse(data[1].Trim().Split("-")[1]);
+                        float min = float.Parse(data[1].Trim().Split("~")[0]);
+                        float max = float.Parse(data[1].Trim().Split("~")[1]);
                         for (int i = 0; i < dataset.attributes[columnNumber].Count; i++)
                         {
                             if (Convert.ToString(dataset.attributes[columnNumber][i]) == "?")
@@ -233,6 +233,8 @@ namespace MIW_P1
             }
             else
             {
+                float minRange = Convert.ToSingle(textBox11.Text);
+                float maxRange = Convert.ToSingle(textBox10.Text);
                 List<List<object>> normalizedAttributes = new List<List<object>>(dataset.attributes.Count);
                 for (int i = 0; i < dataset.attributes.Count; i++)
                 {
@@ -255,7 +257,7 @@ namespace MIW_P1
                         List<object> normalizedColumn = new List<object>(dataset.attributes[i].Count);
                         for (int j = 0; j < dataset.attributes[i].Count; j++)
                         {
-                            double normalizedValue = ((double)tmpList[j] -minimum)/(maximum-minimum);
+                            double normalizedValue = (maxRange-minRange)*(((double)tmpList[j] -minimum)/(maximum-minimum))+minRange;
                             normalizedColumn.Add(normalizedValue);
                         }
                         normalizedAttributes.Add(normalizedColumn);
