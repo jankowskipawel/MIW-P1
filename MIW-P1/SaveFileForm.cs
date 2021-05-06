@@ -63,6 +63,11 @@ namespace MIW_P1
                 }
                 else
                 {
+                    if (textBox1.Text.Substring(textBox1.Text.Length - 5) != ".json")
+                    {
+                        sw.Close();
+                        sw = new StreamWriter($"{textBox1.Text}.json");
+                    }
                     string jsonFile = JsonSerializer.Serialize(data);
                     sw.Write(jsonFile);
                 }

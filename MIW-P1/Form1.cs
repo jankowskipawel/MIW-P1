@@ -6,6 +6,7 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -31,6 +32,24 @@ namespace MIW_P1
             textBox2.Text = openFileDialog2.FileName;
         }
 
+        List<List<double>> TransposeList(List<List<double>> a)
+        {
+            List<List<double>> result = new List<List<double>>();
+            int columns = a.Count;
+            int rows = a[0].Count;
+            for (int i = 0; i < rows; i++)
+            {
+                List<double> tmp = new List<double>();
+                for (int j = 0; j < columns; j++)
+                {
+                    tmp.Add(a[j][i]);
+                }
+
+                result.Add(tmp);
+            }
+
+            return result;
+        }
 
         //LOAD DATASET BUTTON
         private void button5_Click(object sender, EventArgs e)
@@ -45,8 +64,23 @@ namespace MIW_P1
             }
             else
             {
-                //read all lines from file
-                string[] lines = File.ReadAllLines(textBox1.Text);
+                string[] lines;
+                if (textBox1.Text.Substring(textBox1.Text.Length - 5) == ".json")
+                {
+                    string jsonString = File.ReadAllText(textBox1.Text);
+                    List<List<double>> deserializedData = JsonSerializer.Deserialize<List<List<double>>>(jsonString);
+                    List<List<double>> tmp = TransposeList(deserializedData);
+                    lines = new string[tmp.Count];
+                    for (int i = 0; i < tmp.Count; i++)
+                    {
+                        lines[i] = String.Join(textBox3.Text, tmp[i]);
+                    }
+                }
+                else
+                {
+                    //read all lines from file
+                    lines = File.ReadAllLines(textBox1.Text);
+                }
                 for (int n = 0; n < lines.Length; n++)
                 {
                     string[] columns = lines[n].Split(textBox3.Text);
